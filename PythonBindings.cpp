@@ -63,9 +63,7 @@ PYBIND11_MODULE(mlir, m) {
 
   py::class_<mlir::Operation, std::unique_ptr<mlir::Operation, py::nodelete>>(
     m, "Operation", "MLIR Operation")
-    .def("getName", &mlir::Operation::getName);
-
-  m.def("getOperationName", &getOperationName, "Get Operation name.");
+    .def("getName", &getOperationName);
 }
 
 }  // namespace python
