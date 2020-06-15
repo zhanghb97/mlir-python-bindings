@@ -6,10 +6,10 @@ module = mlir.Module(ctx)
 # Get operation from module.
 operation = module.getOperation()
 # Get and print operation name.
-name = mlir.getOperationName(operation)
+name = operation.getName()
 print(name)
 # Get same operation from module.
 same_operation = module.getOperation()
 # Get and print same operation name.
-same_name = mlir.getOperationName(same_operation)
+same_name = same_operation.getName()
 print(same_name)
