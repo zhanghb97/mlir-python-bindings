@@ -5,11 +5,16 @@ MLIR Python Bindings is a project of Google Summer of Code 2020.
 
 This is the work-flow and configuration to get and build MLIR Python Bindings:
 
-1. Clone llvm-project and mlir-python-bindings (The MLIR Python Bindings project is based on the LLVM system. ):
+1. Clone llvm-project (The MLIR Python Bindings project is based on the LLVM system. ):
    - `git clone git@github.com:llvm/llvm-project.git`
-   - `git clone git@github.com:zhanghb97/mlir-python-bindings.git`
 
-2. Configure and build MLIR:
+   Clone the mlir-python-bindings in the specific directory:
+
+   - `cd llvm-project/mlir`
+
+   - `git clone git@github.com:zhanghb97/mlir-python-bindings.git bindings`
+
+2. Configure and build MLIR and mlir-python-bindings:
 
    - `cd llvm-project`
 
@@ -30,19 +35,7 @@ This is the work-flow and configuration to get and build MLIR Python Bindings:
 
    - `cmake --build .`
 
-3. Copy the `mlir-python-bindings` project into the `llvm-projects/mlir` directory, and rename the project:
-
-   - `cp -r mlir-python-bindings llvm-project/mlir/bindings`
-
-4. Append the following line to the `llvm-project/mlir/CMakeLists.txt`:
-
-   - `add_subdirectory(bindings)`
-
-5. Build MLIR Python Bindings:
-
-   - `cmake --build .`
-
-6. Test the shared library:
+3. Test the shared library:
 
    - `cd llvm-project/mlir/bindings/test`
    - `python test.py`
