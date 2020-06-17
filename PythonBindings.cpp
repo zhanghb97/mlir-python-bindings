@@ -12,6 +12,10 @@
 #include <string>
 #include <pybind11/pybind11.h>
 #include "mlir/IR/Module.h"
+#include "mlir/InitAllDialects.h"
+#include "mlir/Parser.h"
+#include "mlir/Support/FileUtilities.h"
+#include "llvm/Support/SourceMgr.h"
 
 namespace mlir {
 namespace python {
@@ -24,6 +28,20 @@ class PythonModule {
 public:
   PythonModule(MLIRContext &context) {
     module = ModuleOp::create(UnknownLoc::get(&context));
+  }
+
+  PythonModule(std::string mlirFileName, 
+               MLIRContext &context, llvm::SourceMgr &sourceMgr) {
+    // Set up the error message.
+    std::string errorMessage;
+    // Set up the input file.
+    auto file = openInputFile(mlirFileName, &errorMessage);
+    if (!file) {
+      llvm::errs() << errorMessage << "\n";
+    }
+    // Parse the input file.
+    sourceMgr.AddNewSourceBuffer(std::move(file), llvm::SMLoc());
+    module = parseSourceFile(sourceMgr, &context);
   }
 
   void dump() {
@@ -55,15 +73,42 @@ PYBIND11_MODULE(mlir, m) {
     m, "Context", "MLIR Context")
     .def(py::init<>());
 
+  py::class_<llvm::SourceMgr>(
+    m, "SourceMgr", "MLIR SourceMgr")
+    .def(py::init<>());
+
   py::class_<PythonModule>(
     m, "Module", "MLIR Module")
     .def(py::init<MLIRContext&>(), py::keep_alive<1, 2>())
+    .def(py::init<std::string, MLIRContext&, llvm::SourceMgr&>(), 
+         py::keep_alive<1, 2>())
     .def("dump", &PythonModule::dump)
     .def("getOperation", &PythonModule::getOperation);
 
   py::class_<mlir::Operation, std::unique_ptr<mlir::Operation, py::nodelete>>(
     m, "Operation", "MLIR Operation")
     .def("getName", &getOperationName);
+
+  m.def("registerAllDialects", 
+        [](){
+          registerDialect<AffineDialect>();
+          registerDialect<avx512::AVX512Dialect>();
+          registerDialect<gpu::GPUDialect>();
+          registerDialect<LLVM::LLVMAVX512Dialect>();
+          registerDialect<LLVM::LLVMDialect>();
+          registerDialect<linalg::LinalgDialect>();
+          registerDialect<scf::SCFDialect>();
+          registerDialect<omp::OpenMPDialect>();
+          registerDialect<quant::QuantizationDialect>();
+          registerDialect<spirv::SPIRVDialect>();
+          registerDialect<StandardOpsDialect>();
+          registerDialect<vector::VectorDialect>();
+          registerDialect<NVVM::NVVMDialect>();
+          registerDialect<ROCDL::ROCDLDialect>();
+          registerDialect<SDBMDialect>();
+          registerDialect<shape::ShapeDialect>();
+          return true;
+        });
 }
 
 }  // namespace python
