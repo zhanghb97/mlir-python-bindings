@@ -90,25 +90,7 @@ PYBIND11_MODULE(mlir, m) {
     .def("getName", &getOperationName);
 
   m.def("registerAllDialects", 
-        [](){
-          registerDialect<AffineDialect>();
-          registerDialect<avx512::AVX512Dialect>();
-          registerDialect<gpu::GPUDialect>();
-          registerDialect<LLVM::LLVMAVX512Dialect>();
-          registerDialect<LLVM::LLVMDialect>();
-          registerDialect<linalg::LinalgDialect>();
-          registerDialect<scf::SCFDialect>();
-          registerDialect<omp::OpenMPDialect>();
-          registerDialect<quant::QuantizationDialect>();
-          registerDialect<spirv::SPIRVDialect>();
-          registerDialect<StandardOpsDialect>();
-          registerDialect<vector::VectorDialect>();
-          registerDialect<NVVM::NVVMDialect>();
-          registerDialect<ROCDL::ROCDLDialect>();
-          registerDialect<SDBMDialect>();
-          registerDialect<shape::ShapeDialect>();
-          return true;
-        });
+        static_cast<void (&)()>(registerAllDialects), "Register all dialects");
 }
 
 }  // namespace python
