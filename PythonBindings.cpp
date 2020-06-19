@@ -89,6 +89,16 @@ PYBIND11_MODULE(mlir, m) {
     m, "Operation", "MLIR Operation")
     .def("getName", &getOperationName);
 
+  py::class_<mlir::Region>(m, "Region", "MLIR Region")
+    .def(py::init<>())
+    .def("front", &Region::front, py::return_value_policy::reference)
+    .def("back", &Region::back, py::return_value_policy::reference)
+    .def("getParentOp", &Region::getParentOp);
+  
+  py::class_<mlir::Block>(m, "Block", "MLIR Block")
+    .def(py::init<>())
+    .def("dump", &Block::dump);
+  
   m.def("registerAllDialects", 
         static_cast<void (&)()>(registerAllDialects), "Register all dialects");
 }
