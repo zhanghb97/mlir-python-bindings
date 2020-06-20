@@ -98,6 +98,13 @@ PYBIND11_MODULE(mlir, m) {
   
   py::class_<mlir::Block>(m, "Block", "MLIR Block")
     .def(py::init<>())
+    .def("getParent", &Block::getParent)
+    .def("getParentOp", &Block::getParentOp)
+    .def("isEntryBlock", &Block::isEntryBlock)
+    .def("args_empty", &Block::args_empty)
+    .def("getNumArguments", &Block::getNumArguments)
+    .def("front", &Block::front, py::return_value_policy::reference)
+    .def("back", &Block::back, py::return_value_policy::reference)
     .def("dump", &Block::dump);
   
   m.def("registerAllDialects", 
