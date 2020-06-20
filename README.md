@@ -41,4 +41,5 @@ This is the work-flow and configuration to get and build MLIR Python Bindings:
    - `python test_module.py`
    - `python test_input.py`
    - `python test_region.py`
+   - `python test_block.py`
 
