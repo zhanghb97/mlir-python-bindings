@@ -87,7 +87,8 @@ PYBIND11_MODULE(mlir, m) {
 
   py::class_<mlir::Operation, std::unique_ptr<mlir::Operation, py::nodelete>>(
     m, "Operation", "MLIR Operation")
-    .def("getName", &getOperationName);
+    .def("getName", &getOperationName)
+    .def("getRegion", &Operation::getRegion, py::return_value_policy::reference);
 
   py::class_<mlir::Region>(m, "Region", "MLIR Region")
     .def(py::init<>())
