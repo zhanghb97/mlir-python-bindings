@@ -4,5 +4,4 @@ pybind11_add_module(mlir PythonBindings.cpp)
 add_dependencies(mlir MLIR)
 target_link_libraries(mlir PRIVATE MLIR)
 set_target_properties(mlir PROPERTIES 
-  PREFIX "" OUTPUT_NAME "mlir" SUFFIX ".so"
-  LIBRARY_OUTPUT_DIRECTORY ${MLIR_MAIN_SRC_DIR}/bindings/test)
+  PREFIX "" OUTPUT_NAME "mlir" SUFFIX ".so")
