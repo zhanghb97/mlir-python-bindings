@@ -1,15 +1,23 @@
+import sys
+sys.path.append('../../../build/lib/')
 import mlir
 
-# Initial the context and module.
+# Construct Module with context.
 ctx = mlir.Context()
 module = mlir.Module(ctx)
-# Get operation from module.
+# Get operation twice to test ownership.
 operation = module.getOperation()
-# Get and print operation name.
 name = operation.getName()
-print(name)
-# Get same operation from module.
 same_operation = module.getOperation()
-# Get and print same operation name.
 same_name = same_operation.getName()
-print(same_name)
+
+# Test Module constructor with MLIRContext
+def test_constructor():
+  return module
+
+# Test Module::getOperation()
+def test_getOperation():
+  return_list = []
+  return_list.append(name)
+  return_list.append(same_name)
+  return return_list

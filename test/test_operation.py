@@ -2,23 +2,17 @@ import sys
 sys.path.append('../../../build/lib/')
 import mlir
 
-# Get region
+# Get operation from milr file
 mlir.registerAllDialects()
 ctx = mlir.Context()
 sourcemgr = mlir.SourceMgr()
 module = mlir.Module("./test_region.mlir", ctx, sourcemgr)
 operation = module.getOperation()
-region = operation.getRegion(0)
 
-# Test Region::front()
-def test_front():
-  return region.front()
-
-# Test Region::back()
-def test_back():
-  return region.back()
-
-# Test Region::getParentOp()
-def test_getParentOp():
-  operation = region.getParentOp()
+# Test Operation::getName()
+def test_getName():
   return operation.getName()
+
+# Test Region::getRegion(unsigned index)
+def test_getRegion():
+  return operation.getRegion(0)

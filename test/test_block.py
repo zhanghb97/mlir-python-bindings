@@ -1,36 +1,39 @@
+import sys
+sys.path.append('../../../build/lib/')
 import mlir
 
-# Register all dialects.
+# Get block from input file.
 mlir.registerAllDialects()
-# Initial the Context and SourceMgr.
 ctx = mlir.Context()
 sourcemgr = mlir.SourceMgr()
-# Get module from input file.
 module = mlir.Module("./test_region.mlir", ctx, sourcemgr)
-# Get operation from module.
-operation = module.getOperation()
-# Get region from operation.
-region = operation.getRegion(0)
-# Get block from region.
+region = module.getOperation().getRegion(0)
 block = region.front()
+front_region = block.front().getRegion(0)
+
 # Test Block::getParent()
-parent_region = block.getParent()
-print(parent_region)
-# Test Block::getOperationOp()
-parent_operation = block.getParentOp()
-print(parent_operation.getName())
-# Test Block::front()
-block_operation = block.front()
-print(block_operation.getName())
-# Get region from operation.
-block_region = block_operation.getRegion(0)
-# Get block from region
-blk = block_region.back()
-# Test Block::dump()
-blk.dump()
+def test_getParent():
+  return block.getParent()
+
+# Test Block::getParentOp()
+def test_getParentOp():
+  return block.getParentOp()
+
 # Test Block::isEntryBlock()
-print(blk.isEntryBlock())
+def test_isEntryBlock():
+  return front_region.back().isEntryBlock()
+
 # Test Block::args_empty()
-print(blk.args_empty())
-# Test Block::getNumArguments()
-print(blk.getNumArguments())
+def test_args_empty():
+  return front_region.back().args_empty()
+
+def test_getNumArguments():
+  return front_region.back().getNumArguments()
+
+# Test Block::front()
+def test_front():
+  return block.front()
+
+# Test Block::back()
+def test_back():
+  return block.back()

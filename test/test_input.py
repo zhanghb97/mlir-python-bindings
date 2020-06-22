@@ -1,16 +1,11 @@
+import sys
+sys.path.append('../../../build/lib/')
 import mlir
 
-# Register all dialects.
-mlir.registerAllDialects()
-# Initial the Context and SourceMgr.
-ctx = mlir.Context()
-sourcemgr = mlir.SourceMgr()
-# Get module from input file.
-module = mlir.Module("./test.mlir", ctx, sourcemgr)
-# Get operation from module.
-operation = module.getOperation()
-# Get and print operation name.
-name = operation.getName()
-print(name)
-# Dump the module
-module.dump()
+# Test Module constructor with mlir file.
+def test_constructor():
+  mlir.registerAllDialects()
+  ctx = mlir.Context()
+  sourcemgr = mlir.SourceMgr()
+  module = mlir.Module("./test_input.mlir", ctx, sourcemgr)
+  return module
