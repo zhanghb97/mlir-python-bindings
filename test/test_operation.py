@@ -2,7 +2,7 @@ import sys
 sys.path.append('../../../build/lib/')
 import mlir
 
-# Get operation from milr file
+# Get operation from milr file.
 mlir.registerAllDialects()
 ctx = mlir.Context()
 sourcemgr = mlir.SourceMgr()
@@ -37,6 +37,14 @@ def test_isAncestor():
   return_list.append(operation.isAncestor(operation))
   return_list.append(operation.isAncestor(test_operation))
   return return_list
+
+# Test Operation::getNumOperands()
+def test_getNumOperands():
+  return operation.getNumOperands()
+
+# Test Operation::getNumRegions()
+def test_getNumRegions():
+  return operation.getNumRegions()
 
 # Test Operation::getRegion(unsigned index)
 def test_getRegion():

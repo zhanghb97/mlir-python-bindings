@@ -31,7 +31,19 @@ class TestMLIR(unittest.TestCase):
     isAncestor_expect_list = [True, True]
     isAncestor_return_list = test_operation.test_isAncestor()
     self.assertListEqual(isAncestor_expect_list, isAncestor_return_list)
+    # TODO: Function isBeforeInBlock is waiting for testing.
+    self.assertEqual(test_operation.test_getNumOperands(), 0)
+    self.assertEqual(test_operation.test_getNumRegions(), 1)
     self.assertIsInstance(test_operation.test_getRegion(), mlir.Region)
+    # TODO: Function hasSuccessors is waiting for testing.
+    # TODO: Function getNumSuccessors is waiting for testing.
+    # TODO: Function isCommutative is waiting for testing.
+    # TODO: Function isKnownTerminator is waiting for testing.
+    # TODO: Function isKnownNonTerminator is waiting for testing.
+    # TODO: Function isKnownIsolatedFromAbove is waiting for testing.
+    # TODO: Function hasOneUse is waiting for testing.
+    # TODO: Function use_empty is waiting for testing.
+    # TODO: Function isUsedOutsideOfBlock is waiting for testing.
 
   def test_region(self):
     self.assertIsInstance(test_region.test_front(), mlir.Block)
@@ -49,4 +61,3 @@ class TestMLIR(unittest.TestCase):
 
 if __name__ == '__main__':
   unittest.main()
-
