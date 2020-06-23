@@ -85,22 +85,35 @@ PYBIND11_MODULE(mlir, m) {
     .def("dump", &PythonModule::dump)
     .def("getOperation", &PythonModule::getOperation);
 
-  py::class_<mlir::Operation, std::unique_ptr<mlir::Operation, py::nodelete>>(
+  py::class_<Operation, std::unique_ptr<Operation, py::nodelete>>(
     m, "Operation", "MLIR Operation")
     .def("getName", &getOperationName)
     .def("getParentRegion", &Operation::getParentRegion)
     .def("getParentOp", &Operation::getParentOp)
     .def("isProperAncestor", &Operation::isProperAncestor)
     .def("isAncestor", &Operation::isAncestor)
-    .def("getRegion", &Operation::getRegion, py::return_value_policy::reference);
+    .def("isBeforeInBlock", &Operation::isBeforeInBlock)
+    .def("dump", &Operation::dump)
+    .def("getNumOperands", &Operation::getNumOperands)
+    .def("getNumRegions", &Operation::getNumRegions)
+    .def("getRegion", &Operation::getRegion, py::return_value_policy::reference)
+    .def("hasSuccessors", &Operation::hasSuccessors)
+    .def("getNumSuccessors", &Operation::getNumSuccessors)
+    .def("isCommutative", &Operation::isCommutative)
+    .def("isKnownTerminator", &Operation::isKnownTerminator)
+    .def("isKnownNonTerminator", &Operation::isKnownNonTerminator)
+    .def("isKnownIsolatedFromAbove", &Operation::isKnownIsolatedFromAbove)
+    .def("hasOneUse", &Operation::hasOneUse)
+    .def("use_empty", &Operation::use_empty)
+    .def("isUsedOutsideOfBlock", &Operation::isUsedOutsideOfBlock);
 
-  py::class_<mlir::Region>(m, "Region", "MLIR Region")
+  py::class_<Region>(m, "Region", "MLIR Region")
     .def(py::init<>())
     .def("front", &Region::front, py::return_value_policy::reference)
     .def("back", &Region::back, py::return_value_policy::reference)
     .def("getParentOp", &Region::getParentOp);
   
-  py::class_<mlir::Block>(m, "Block", "MLIR Block")
+  py::class_<Block>(m, "Block", "MLIR Block")
     .def(py::init<>())
     .def("getParent", &Block::getParent)
     .def("getParentOp", &Block::getParentOp)
