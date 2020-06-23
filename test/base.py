@@ -18,11 +18,19 @@ class TestMLIR(unittest.TestCase):
     self.assertIsInstance(test_module.test_constructor(), mlir.Module)
     expect_list = ['module', 'module']
     result_list = test_module.test_getOperation()
-    for r, e in result_list, expect_list:
-      self.assertEqual(r, e)
+    self.assertListEqual(expect_list, result_list)
 
   def test_operation(self):
     self.assertEqual(test_operation.test_getName(), 'module')
+    self.assertIsInstance(test_operation.test_getParentRegion(), mlir.Region)
+    self.assertIsInstance(test_operation.test_getParentOp(), mlir.Operation)
+    isProperAncestor_expect_list = [False, True]
+    isProperAncestor_return_list = test_operation.test_isProperAncestor()
+    self.assertListEqual(isProperAncestor_expect_list,
+                         isProperAncestor_return_list)
+    isAncestor_expect_list = [True, True]
+    isAncestor_return_list = test_operation.test_isAncestor()
+    self.assertListEqual(isAncestor_expect_list, isAncestor_return_list)
     self.assertIsInstance(test_operation.test_getRegion(), mlir.Region)
 
   def test_region(self):
@@ -40,5 +48,5 @@ class TestMLIR(unittest.TestCase):
     self.assertIsInstance(test_block.test_back(), mlir.Operation)
 
 if __name__ == '__main__':
-    unittest.main()
+  unittest.main()
 
