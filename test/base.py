@@ -1,6 +1,6 @@
 import unittest
-import sys
-sys.path.append('../../../build/lib/')
+import site
+site.addsitedir('./')
 import mlir
 
 import test_input

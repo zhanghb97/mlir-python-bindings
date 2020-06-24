@@ -1,5 +1,5 @@
-import sys
-sys.path.append('../../../build/lib/')
+import site
+site.addsitedir('./')
 import mlir
 
 # Get operation from milr file.
