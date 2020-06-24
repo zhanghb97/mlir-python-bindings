@@ -18,9 +18,9 @@ This is the work-flow and configuration to get and build MLIR Python Bindings:
 
    - `cd llvm-project`
 
-   - `mkdir build`
+   - `mkdir <build directory name>`  (e.g. `mkdir build`)
 
-   - `cd build`
+   - `cd <build directory name>`  (e.g. `cd build`)
 
    - Configure the project:
 
@@ -33,10 +33,18 @@ This is the work-flow and configuration to get and build MLIR Python Bindings:
        -DLLVM_LINK_LLVM_DYLIB=ON
      ```
 
-   - `cmake --build .`
+     You can generate the shared library `mlir.so` wherever you want with the option `-DMLIR_LIBRARY_PATH`. For example:
+
+     ```
+     -DMLIR_LIBRARY_PATH=~/llvm-project/build/bin/
+     ```
+
+     Otherwise, the shared library will be generated to `llvm-project/<build directory name>/lib` by default.
+
+   - cmake --build .`
 
 3. Test the shared library:
 
    - `cd llvm-project/mlir/bindings/test`
-   - `python base.py`
+   - `python -m unittest base -v`
 
