@@ -109,9 +109,15 @@ PYBIND11_MODULE(mlir, m) {
 
   py::class_<Region>(m, "Region", "MLIR Region")
     .def(py::init<>())
+    .def("empty", &Region::empty)
     .def("front", &Region::front, py::return_value_policy::reference)
     .def("back", &Region::back, py::return_value_policy::reference)
-    .def("getParentOp", &Region::getParentOp);
+    .def("getParentRegion", &Region::getParentRegion)
+    .def("getParentOp", &Region::getParentOp)
+    .def("getRegionNumber", &Region::getRegionNumber)
+    .def("isProperAncestor", &Region::isProperAncestor)
+    .def("isAncestor", &Region::isAncestor)
+    .def("findAncestorBlockInRegion", &Region::findAncestorBlockInRegion);
   
   py::class_<Block>(m, "Block", "MLIR Block")
     .def(py::init<>())
