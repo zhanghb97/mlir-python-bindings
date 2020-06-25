@@ -122,6 +122,12 @@ PYBIND11_MODULE(mlir, m) {
     .def("getNumArguments", &Block::getNumArguments)
     .def("front", &Block::front, py::return_value_policy::reference)
     .def("back", &Block::back, py::return_value_policy::reference)
+    .def("findAncestorOpInBlock", &Block::findAncestorOpInBlock)
+    .def("isOpOrderValid", &Block::isOpOrderValid)
+    .def("verifyOpOrder", &Block::verifyOpOrder)
+    .def("getTerminator", &Block::getTerminator)
+    .def("hasNoPredecessors", &Block::hasNoPredecessors)
+    .def("getNumSuccessors", &Block::getNumSuccessors)
     .def("dump", &Block::dump);
   
   m.def("registerAllDialects", 
