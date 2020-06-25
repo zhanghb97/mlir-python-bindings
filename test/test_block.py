@@ -6,7 +6,7 @@ import mlir
 mlir.registerAllDialects()
 ctx = mlir.Context()
 sourcemgr = mlir.SourceMgr()
-module = mlir.Module("./test_region.mlir", ctx, sourcemgr)
+module = mlir.Module("./test_block.mlir", ctx, sourcemgr)
 region = module.getOperation().getRegion(0)
 block = region.front()
 front_region = block.front().getRegion(0)
@@ -37,3 +37,28 @@ def test_front():
 # Test Block::back()
 def test_back():
   return block.back()
+
+# Test Block::findAncestorOpInBlock(Operation &)
+def test_findAncestorOpInBlock():
+  operation = block.front()
+  return block.findAncestorOpInBlock(operation)
+
+# Test Block::isOpOrderValid()
+def test_isOpOrderValid():
+  return block.isOpOrderValid()
+
+# Test Block::verifyOpOrder()
+def test_verifyOpOrder():
+  return block.verifyOpOrder()
+
+# Test Block::getTerminator()
+def test_getTerminator():
+  return block.getTerminator()
+
+# Test Block::hasNoPredecessors()
+def test_hasNoPredecessors():
+  return block.hasNoPredecessors()
+
+# Test Block::getNumSuccessors()
+def test_getNumSuccessors():
+  return block.getNumSuccessors()

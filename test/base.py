@@ -58,6 +58,13 @@ class TestMLIR(unittest.TestCase):
     self.assertEqual(test_block.test_getNumArguments(), 2)
     self.assertIsInstance(test_block.test_front(), mlir.Operation)
     self.assertIsInstance(test_block.test_back(), mlir.Operation)
+    self.assertIsInstance(test_block.test_findAncestorOpInBlock(), mlir.Operation)
+    self.assertFalse(test_block.test_isOpOrderValid())
+    self.assertFalse(test_block.test_verifyOpOrder())
+    self.assertIsInstance(test_block.test_getTerminator(), mlir.Operation)
+    self.assertEqual(test_block.test_getTerminator().getName(), 'module_terminator')
+    self.assertTrue(test_block.test_hasNoPredecessors())
+    self.assertEqual(test_block.test_getNumSuccessors(), 0)
 
 if __name__ == '__main__':
   unittest.main()
