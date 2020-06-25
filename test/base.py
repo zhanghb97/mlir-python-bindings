@@ -46,9 +46,20 @@ class TestMLIR(unittest.TestCase):
     # TODO: Function isUsedOutsideOfBlock is waiting for testing.
 
   def test_region(self):
+    self.assertFalse(test_region.test_empty())
     self.assertIsInstance(test_region.test_front(), mlir.Block)
     self.assertIsInstance(test_region.test_back(), mlir.Block)
+    self.assertIsInstance(test_region.test_getParentRegion(), mlir.Region)
     self.assertEqual(test_region.test_getParentOp(), 'module')
+    self.assertEqual(test_region.test_getRegionNumber(), 0)
+    isProperAncestor_expect_list = [False, True]
+    isProperAncestor_return_list = test_region.test_isProperAncestor()
+    self.assertListEqual(isProperAncestor_expect_list,
+                         isProperAncestor_return_list)
+    isAncestor_expect_list = [True, True]
+    isAncestor_return_list = test_region.test_isAncestor()
+    self.assertListEqual(isAncestor_expect_list, isAncestor_return_list)
+    self.assertIsInstance(test_region.test_findAncestorBlockInRegion(), mlir.Block)
 
   def test_block(self):
     self.assertIsInstance(test_block.test_getParent(), mlir.Region)
