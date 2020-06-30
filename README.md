@@ -14,6 +14,10 @@ This is the work-flow and configuration to get and build MLIR Python Bindings:
 
    - `git clone git@github.com:zhanghb97/mlir-python-bindings.git bindings`
 
+   Modify the `CMakeLists.txt`
+   
+   - Append `add_subdirectory(bindings)` to `llvm-project/mlir/CMakeLists.txt`
+   
 2. Configure and build MLIR and mlir-python-bindings:
 
    - `cd llvm-project`
@@ -41,7 +45,7 @@ This is the work-flow and configuration to get and build MLIR Python Bindings:
 
      Otherwise, the shared library will be generated to `llvm-project/<build directory name>/lib` by default.
 
-   - cmake --build .`
+   - `cmake --build .`
 
 3. Test the shared library:
 
