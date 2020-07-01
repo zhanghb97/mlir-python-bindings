@@ -60,13 +60,16 @@ class TestMLIR(unittest.TestCase):
     isAncestor_return_list = test_region.test_isAncestor()
     self.assertListEqual(isAncestor_expect_list, isAncestor_return_list)
     self.assertIsInstance(test_region.test_findAncestorBlockInRegion(), mlir.Block)
+    iterator_return_list = test_region.test_iterator()
+    for it in iterator_return_list:
+      self.assertIsInstance(it, mlir.Block)
 
   def test_block(self):
     self.assertIsInstance(test_block.test_getParent(), mlir.Region)
     self.assertIsInstance(test_block.test_getParentOp(), mlir.Operation)
-    self.assertFalse(test_block.test_isEntryBlock())
-    self.assertFalse(test_block.test_args_empty())
-    self.assertEqual(test_block.test_getNumArguments(), 2)
+    self.assertTrue(test_block.test_isEntryBlock())
+    self.assertTrue(test_block.test_args_empty())
+    self.assertEqual(test_block.test_getNumArguments(), 0)
     self.assertIsInstance(test_block.test_front(), mlir.Operation)
     self.assertIsInstance(test_block.test_back(), mlir.Operation)
     self.assertIsInstance(test_block.test_findAncestorOpInBlock(), mlir.Operation)
@@ -76,6 +79,9 @@ class TestMLIR(unittest.TestCase):
     self.assertEqual(test_block.test_getTerminator().getName(), 'module_terminator')
     self.assertTrue(test_block.test_hasNoPredecessors())
     self.assertEqual(test_block.test_getNumSuccessors(), 0)
+    iterator_return_list = test_block.test_iterator()
+    for it in iterator_return_list:
+      self.assertIsInstance(it, mlir.Operation)
 
 if __name__ == '__main__':
   unittest.main()

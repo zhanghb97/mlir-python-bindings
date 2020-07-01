@@ -5,6 +5,7 @@ import mlir
 # Get block from input file.
 mlir.registerAllDialects()
 ctx = mlir.Context()
+ctx.allowUnregisteredDialects(True)
 sourcemgr = mlir.SourceMgr()
 module = mlir.Module("./test_block.mlir", ctx, sourcemgr)
 region = module.getOperation().getRegion(0)
@@ -62,3 +63,10 @@ def test_hasNoPredecessors():
 # Test Block::getNumSuccessors()
 def test_getNumSuccessors():
   return block.getNumSuccessors()
+
+# Test Block iterator
+def test_iterator():
+  return_list = []
+  for operation in block:
+    return_list.append(operation)
+  return return_list

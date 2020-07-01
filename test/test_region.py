@@ -5,6 +5,7 @@ import mlir
 # Get region
 mlir.registerAllDialects()
 ctx = mlir.Context()
+ctx.allowUnregisteredDialects(True)
 sourcemgr = mlir.SourceMgr()
 module = mlir.Module("./test_region.mlir", ctx, sourcemgr)
 operation = module.getOperation()
@@ -54,3 +55,10 @@ def test_isAncestor():
 # Test Region::findAncestorBlockInRegion(Block &)
 def test_findAncestorBlockInRegion():
   return region.findAncestorBlockInRegion(block)
+
+# Test Region iterator.
+def test_iterator():
+  return_list = []
+  for test_block in front_region:
+    return_list.append(test_block)
+  return return_list
