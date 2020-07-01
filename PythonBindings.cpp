@@ -71,7 +71,8 @@ PYBIND11_MODULE(mlir, m) {
 
   py::class_<MLIRContext>(
     m, "Context", "MLIR Context")
-    .def(py::init<>());
+    .def(py::init<>())
+    .def("allowUnregisteredDialects", &MLIRContext::allowUnregisteredDialects);
 
   py::class_<llvm::SourceMgr>(
     m, "SourceMgr", "MLIR SourceMgr")
@@ -117,7 +118,10 @@ PYBIND11_MODULE(mlir, m) {
     .def("getRegionNumber", &Region::getRegionNumber)
     .def("isProperAncestor", &Region::isProperAncestor)
     .def("isAncestor", &Region::isAncestor)
-    .def("findAncestorBlockInRegion", &Region::findAncestorBlockInRegion);
+    .def("findAncestorBlockInRegion", &Region::findAncestorBlockInRegion)
+    .def("__iter__", [](Region *region) {
+      return py::make_iterator(region->begin(), region->end());
+    }, py::keep_alive<0, 1>());
   
   py::class_<Block>(m, "Block", "MLIR Block")
     .def(py::init<>())
@@ -134,7 +138,10 @@ PYBIND11_MODULE(mlir, m) {
     .def("getTerminator", &Block::getTerminator)
     .def("hasNoPredecessors", &Block::hasNoPredecessors)
     .def("getNumSuccessors", &Block::getNumSuccessors)
-    .def("dump", &Block::dump);
+    .def("dump", &Block::dump)
+    .def("__iter__", [](Block *block) {
+      return py::make_iterator(block->begin(), block->end());
+    }, py::keep_alive<0, 1>());
   
   m.def("registerAllDialects", 
         static_cast<void (&)()>(registerAllDialects), "Register all dialects");
