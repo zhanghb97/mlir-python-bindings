@@ -1,5 +1,6 @@
-import site
-site.addsitedir('./')
+import sys
+import os
+sys.path.append(os.environ['MLIR_LIBRARY_PATH'])
 import mlir
 
 # Test Module constructor with mlir file.
