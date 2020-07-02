@@ -45,10 +45,6 @@ This is the work-flow and configuration to get and build MLIR Python Bindings:
 
      Otherwise, the shared library will be generated to `llvm-project/<build directory name>/lib` by default.
 
-   - `cmake --build .`
+   - `cmake --build . --target check-mlir-python `
 
-3. Test the shared library:
-
-   - `cd llvm-project/mlir/bindings/test`
-   - `python -m unittest base -v`
 
