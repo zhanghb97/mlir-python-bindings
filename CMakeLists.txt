@@ -8,4 +8,11 @@ set(MLIR_LIBRARY_PATH "${CMAKE_BINARY_DIR}/lib/"
 set_target_properties(mlir PROPERTIES 
   PREFIX "" OUTPUT_NAME "mlir" SUFFIX ".so"
   LIBRARY_OUTPUT_DIRECTORY ${MLIR_LIBRARY_PATH})
-file(WRITE ./test/mlir.pth ${MLIR_LIBRARY_PATH})
+
+add_custom_target(check-mlir-python
+  COMMAND ${CMAKE_COMMAND} -E env
+          MLIR_LIBRARY_PATH=${MLIR_LIBRARY_PATH}
+          "${Python3_EXECUTABLE}" -m unittest base -v
+  DEPENDS mlir
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/test)
+  
