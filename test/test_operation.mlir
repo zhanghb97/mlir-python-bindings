@@ -1,4 +1,4 @@
-func @test_block_correct_regions() {
+func @test_operation_correct_regions() {
     "test.two_region_op"()(
       {"work"() : () -> ()},
       {"work"() : () -> ()}
@@ -6,16 +6,7 @@ func @test_block_correct_regions() {
     return
 }
 
-func @test_block_extra_regions() {
-    "test.two_region_op"()(
-      {"work"() : () -> ()},
-      {"work"() : () -> ()},
-      {"work"() : () -> ()}
-    ) : () -> ()
-    return
-}
-
-func @test_block_predecessor(i64, i1) -> i64 {
+func @test_operation_successor(i64, i1) -> i64 {
 ^bb0(%a: i64, %cond: i1): // Code dominated by ^bb0 may refer to %a
   cond_br %cond, ^bb1, ^bb2
 
@@ -30,6 +21,9 @@ func @test_block_predecessor(i64, i1) -> i64 {
 // and passes it on to bb4 twice.
 ^bb3(%c: i64):
   br ^bb4(%c, %c : i64, i64)
+
+^bb5:
+  br ^bb3(%b: i64)
 
 ^bb4(%d : i64, %e : i64):
   %0 = addi %d, %e : i64

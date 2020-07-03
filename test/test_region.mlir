@@ -1,4 +1,4 @@
-func @simple(i64, i1) -> i64 {
+func @test_region(i64, i1) -> i64 {
 ^bb0(%a: i64, %cond: i1): // Code dominated by ^bb0 may refer to %a
   cond_br %cond, ^bb1, ^bb2
 

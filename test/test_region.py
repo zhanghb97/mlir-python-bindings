@@ -14,17 +14,9 @@ region = operation.getRegion(0)
 block = region.front()
 front_region = block.front().getRegion(0)
 
-# Test Region::empty()
-def test_empty():
-  return region.empty()
-
-# Test Region::front()
-def test_front():
-  return region.front()
-
-# Test Region::back()
-def test_back():
-  return region.back()
+# Test Region::getContext()
+def test_getContext():
+  return region.getContext()
 
 # Test Region::getParentRegion()
 def test_getParentRegion():
@@ -59,7 +51,20 @@ def test_findAncestorBlockInRegion():
 
 # Test Region iterator.
 def test_iterator():
-  return_list = []
-  for test_block in front_region:
-    return_list.append(test_block)
-  return return_list
+  return [test_block for test_block in front_region]
+
+# Test Region reversed iterator.
+def test_iterator_reversed():
+  return [test_block for test_block in reversed(front_region)]
+
+# Test Region::empty()
+def test_empty():
+  return region.empty()
+
+# Test Region::back()
+def test_back():
+  return region.back()
+
+# Test Region::front()
+def test_front():
+  return region.front()

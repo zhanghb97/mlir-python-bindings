@@ -32,14 +32,6 @@ def test_args_empty():
 def test_getNumArguments():
   return front_region.back().getNumArguments()
 
-# Test Block::front()
-def test_front():
-  return block.front()
-
-# Test Block::back()
-def test_back():
-  return block.back()
-
 # Test Block::findAncestorOpInBlock(Operation &)
 def test_findAncestorOpInBlock():
   operation = block.front()
@@ -61,13 +53,54 @@ def test_getTerminator():
 def test_hasNoPredecessors():
   return block.hasNoPredecessors()
 
+# Test Block::getSinglePredecessor()
+def test_getSinglePredecessor():
+  operation_list = [operation for operation in block]
+  test_region = operation_list[2].getRegion(0)
+  test_block_list = [block for block in test_region]
+  return test_block_list[2].getSinglePredecessor()
+
+# Test Block::getUniquePredecessor()
+def test_getUniquePredecessor():
+  operation_list = [operation for operation in block]
+  test_region = operation_list[2].getRegion(0)
+  test_block_list = [block for block in test_region]
+  return test_block_list[2].getUniquePredecessor()
+
 # Test Block::getNumSuccessors()
 def test_getNumSuccessors():
-  return block.getNumSuccessors()
+  operation_list = [operation for operation in block]
+  test_region = operation_list[2].getRegion(0)
+  test_block_list = [block for block in test_region]
+  return test_block_list[0].getNumSuccessors()
+
+# Test Block::getSuccessor(unsigned)
+def test_getSuccessor():
+  operation_list = [operation for operation in block]
+  test_region = operation_list[2].getRegion(0)
+  test_block_list = [block for block in test_region]
+  successor_num = test_block_list[0].getNumSuccessors()
+  return_list = []
+  for i in range(successor_num):
+    return_list.append(test_block_list[0].getSuccessor(i))
+  return return_list
 
 # Test Block iterator
 def test_iterator():
-  return_list = []
-  for operation in block:
-    return_list.append(operation)
-  return return_list
+  return [operation for operation in block]
+
+# Test Block reversed iterator.
+def test_iterator_reversed():
+  return [operation for operation in reversed(block)]
+
+# Test Block::empty()
+def test_empty():
+  return block.empty()
+
+# Test Block::front()
+def test_front():
+  return block.front()
+
+# Test Block::back()
+def test_back():
+  return block.back()
