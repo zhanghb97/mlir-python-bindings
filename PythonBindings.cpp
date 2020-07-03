@@ -89,6 +89,9 @@ PYBIND11_MODULE(mlir, m) {
   py::class_<Operation, std::unique_ptr<Operation, py::nodelete>>(
     m, "Operation", "MLIR Operation")
     .def("getName", &getOperationName)
+    .def("isRegistered", &Operation::isRegistered)
+    .def("getBlock", &Operation::getBlock)
+    .def("getContext", &Operation::getContext)
     .def("getParentRegion", &Operation::getParentRegion)
     .def("getParentOp", &Operation::getParentOp)
     .def("isProperAncestor", &Operation::isProperAncestor)
@@ -110,18 +113,23 @@ PYBIND11_MODULE(mlir, m) {
 
   py::class_<Region>(m, "Region", "MLIR Region")
     .def(py::init<>())
-    .def("empty", &Region::empty)
-    .def("front", &Region::front, py::return_value_policy::reference)
-    .def("back", &Region::back, py::return_value_policy::reference)
+    .def("getContext", &Region::getContext)
     .def("getParentRegion", &Region::getParentRegion)
     .def("getParentOp", &Region::getParentOp)
     .def("getRegionNumber", &Region::getRegionNumber)
     .def("isProperAncestor", &Region::isProperAncestor)
     .def("isAncestor", &Region::isAncestor)
     .def("findAncestorBlockInRegion", &Region::findAncestorBlockInRegion)
+    // Iteration over the blocks in the region.
     .def("__iter__", [](Region *region) {
       return py::make_iterator(region->begin(), region->end());
-    }, py::keep_alive<0, 1>());
+    }, py::keep_alive<0, 1>())
+    .def("__reversed__", [](Region *region) {
+      return py::make_iterator(region->rbegin(), region->rend());
+    }, py::keep_alive<0, 1>())
+    .def("empty", &Region::empty)
+    .def("back", &Region::back, py::return_value_policy::reference)
+    .def("front", &Region::front, py::return_value_policy::reference);
   
   py::class_<Block>(m, "Block", "MLIR Block")
     .def(py::init<>())
@@ -130,18 +138,26 @@ PYBIND11_MODULE(mlir, m) {
     .def("isEntryBlock", &Block::isEntryBlock)
     .def("args_empty", &Block::args_empty)
     .def("getNumArguments", &Block::getNumArguments)
-    .def("front", &Block::front, py::return_value_policy::reference)
-    .def("back", &Block::back, py::return_value_policy::reference)
     .def("findAncestorOpInBlock", &Block::findAncestorOpInBlock)
     .def("isOpOrderValid", &Block::isOpOrderValid)
     .def("verifyOpOrder", &Block::verifyOpOrder)
     .def("getTerminator", &Block::getTerminator)
     .def("hasNoPredecessors", &Block::hasNoPredecessors)
+    .def("getSinglePredecessor", &Block::getSinglePredecessor)
+    .def("getUniquePredecessor", &Block::getUniquePredecessor)
     .def("getNumSuccessors", &Block::getNumSuccessors)
+    .def("getSuccessor", &Block::getSuccessor)
     .def("dump", &Block::dump)
+    // Iteration over the operations in the block.
     .def("__iter__", [](Block *block) {
       return py::make_iterator(block->begin(), block->end());
-    }, py::keep_alive<0, 1>());
+    }, py::keep_alive<0, 1>())
+    .def("__reversed__", [](Block *block) {
+      return py::make_iterator(block->rbegin(), block->rend());
+    }, py::keep_alive<0, 1>())
+    .def("empty", &Block::empty)
+    .def("back", &Block::back, py::return_value_policy::reference)
+    .def("front", &Block::front, py::return_value_policy::reference);;
   
   m.def("registerAllDialects", 
         static_cast<void (&)()>(registerAllDialects), "Register all dialects");
