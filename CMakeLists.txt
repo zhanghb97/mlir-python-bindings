@@ -12,7 +12,6 @@ set_target_properties(mlir PROPERTIES
 add_custom_target(check-mlir-python
   COMMAND ${CMAKE_COMMAND} -E env
           MLIR_LIBRARY_PATH=${MLIR_LIBRARY_PATH}
-          "${Python3_EXECUTABLE}" -m unittest base -v
+          "${Python3_EXECUTABLE}" -B -m unittest base -v
   DEPENDS mlir
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/test)
-  
