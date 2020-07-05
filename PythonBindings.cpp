@@ -1,13 +1,14 @@
-//===- PythonBindings.cpp - MLIR Python Bindings -===//
+//===- toyc.cpp - The Toy Compiler ----------------------------------------===//
 //
-// Part of Google Summer of Code 2020 Project.
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
-//===---------------------------------------------===//
+//===----------------------------------------------------------------------===//
 //
-// This file defines MLIR Python bindings 
-// and corresponding classes and functions.
+// This file implements MLIR Python bindings.
 //
-//===---------------------------------------------===//
+//===----------------------------------------------------------------------===//
 
 #include <string>
 #include <pybind11/pybind11.h>
