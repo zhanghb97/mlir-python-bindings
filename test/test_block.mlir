@@ -1,21 +1,21 @@
-func @test_block_correct_regions() {
-    "test.two_region_op"()(
-      {"work"() : () -> ()},
-      {"work"() : () -> ()}
-    ) : () -> ()
-    return
+func @test_block_two_regions() {
+  "test.two_region_op"()(
+    {"work"() : () -> ()},
+    {"work"() : () -> ()}
+  ) : () -> ()
+  return
 }
 
-func @test_block_extra_regions() {
-    "test.two_region_op"()(
-      {"work"() : () -> ()},
-      {"work"() : () -> ()},
-      {"work"() : () -> ()}
-    ) : () -> ()
-    return
+func @test_block_three_regions() {
+  "test.three_region_op"()(
+    {"work"() : () -> ()},
+    {"work"() : () -> ()},
+    {"work"() : () -> ()}
+  ) : () -> ()
+  return
 }
 
-func @test_block_predecessor(i64, i1) -> i64 {
+func @test_block_ssa(i64, i1) -> i64 {
 ^bb0(%a: i64, %cond: i1): // Code dominated by ^bb0 may refer to %a
   cond_br %cond, ^bb1, ^bb2
 

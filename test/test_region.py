@@ -3,7 +3,7 @@ import os
 sys.path.append(os.environ['MLIR_LIBRARY_PATH'])
 import mlir
 
-# Get region
+# Get region from milr file.
 mlir.registerAllDialects()
 ctx = mlir.Context()
 ctx.allowUnregisteredDialects(True)
